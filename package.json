@@ -1,0 +1,13 @@
+{
+  "name": "musique-dl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Warps73/music-downloader.git",
+  "author": "Timothy <timothy.prefol@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd api && yarn install && yarn start",
+    "heroku-postbuild": "cd frontend && yarn install && yarn build"
+  }
+}
