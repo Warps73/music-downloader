@@ -7,8 +7,6 @@ router.post("/", async function(req, res, next) {
 
     const path = await download(req.body.url);
 
-    console.log(path)
-
     return res.download('./public/example.zip')
 
 });
