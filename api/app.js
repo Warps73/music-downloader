@@ -12,8 +12,9 @@ app.use(express.static(path.join(__dirname, '/../frontend/build')));
 const cors = require("cors");
 const corsOptions = {
     origin: '*',
-    credentials: true,            //access-control-allow-credentials:true
+    credentials: true,
     optionSuccessStatus: 200,
+    exposedHeaders: ['Content-Disposition']
 }
 
 app.use(express.json());

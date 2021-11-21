@@ -1,14 +1,24 @@
 var express = require("express");
 var router = express.Router();
-const download = require("../manager/spotifyManager");
+const stream = require("stream");
+const {getFileName, download} = require("../manager/spotifyManager");
 
-router.post("/", async function(req, res, next) {
+router.post("/", async function (req, res, next) {
 
 
-    const path = await download(req.body.url);
+    const url = req.body.url;
 
-    return res.download('./public/example.zip')
+    const fileName = await getFileName(url)
+    const file = await download(url);
+    var fileContents = Buffer.from(file, "base64");
 
+    var readStream = new stream.PassThrough();
+    readStream.end(fileContents);
+
+    res.set('Content-disposition', 'attachment; filename=' + fileName);
+    res.set('Content-Type', 'audio/mpeg');
+
+    readStream.pipe(res);
 });
 
 module.exports = router;

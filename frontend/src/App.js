@@ -36,9 +36,9 @@ function App() {
     }
 
     const handleClick = function () {
-        if(url){
+        if (url) {
             download()
-        }else{
+        } else {
             console.error('url not found')
         }
     }
@@ -51,18 +51,17 @@ function App() {
             url: url,
         }, {
             responseType: 'blob',
-        })
-            .then(function (response) {
-                fileDownload(response.data, 'songs.zip')
-                setIsLoading(false);
+        }).then( async function (response) {
+            const filename = response.headers['content-disposition'].split('=')[1]
+            fileDownload(response.data, filename)
+            setIsLoading(false);
 
-            })
+        })
             .catch(function (error) {
                 setIsLoading(false);
                 console.log(error); // todo manage error
             });
     };
-
 
 
     return (
@@ -73,7 +72,7 @@ function App() {
                     <SearchInput placeholder="Spotify Url" onChange={handleChange}/>
                     <SpotifyButton onClick={handleClick}>Download</SpotifyButton>
                 </InputContainer>
-                {isLoading ? <Loader/> : <></> }
+                {isLoading ? <Loader/> : <></>}
 
             </SearchContainer>
         </Container>
