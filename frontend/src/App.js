@@ -47,7 +47,7 @@ function App() {
 
         setIsLoading(true);
 
-        axios.post('http://localhost:9000/spotifyAPI', {
+        axios.post('http://localhost:5000/spotifyAPI', {
             url: url,
         }, {
             responseType: 'blob',
