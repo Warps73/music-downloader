@@ -55,6 +55,7 @@ function App() {
             const filename = response.headers['content-disposition'].split('=')[1]
             fileDownload(response.data, filename)
             setIsLoading(false);
+            setUrl('');
 
         })
             .catch(function (error) {
