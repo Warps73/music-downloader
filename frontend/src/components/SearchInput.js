@@ -9,7 +9,7 @@ const Input = styled.input`
 function SearchInput(props) {
     return (
         <Fragment>
-            <Input placeholder={props.placeholder} onChange={props.onChange} type="text"/>
+            <Input value={props.value} placeholder={props.placeholder} onChange={props.onChange} type="text"/>
         </Fragment>
     );
 }

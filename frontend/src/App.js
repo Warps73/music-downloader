@@ -70,7 +70,7 @@ function App() {
             <SpotifyLogo/>
             <SearchContainer>
                 <InputContainer>
-                    <SearchInput placeholder="Spotify Url" onChange={handleChange}/>
+                    <SearchInput placeholder="Spotify Url" value={url} onChange={handleChange}/>
                     <SpotifyButton onClick={handleClick}>Download</SpotifyButton>
                 </InputContainer>
                 {isLoading ? <Loader/> : <></>}
