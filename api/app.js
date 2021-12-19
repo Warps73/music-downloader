@@ -25,8 +25,8 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 
-app.use("/spotifyApi", spotifyAPIRouter);
-app.use("/youtubeApi", youtubeAPIRouter);
+app.use("/api/download-spotify", spotifyAPIRouter);
+app.use("/api/download-youtube", youtubeAPIRouter);
 
 
 // The "catchall" handler: for any request that doesn't
