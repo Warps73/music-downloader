@@ -5,7 +5,7 @@ global.appRoot = path.resolve(__dirname);
 var cookieParser = require('cookie-parser');
 
 var spotifyAPIRouter = require("./routes/spotifyApi");
-var youtubeAPIRouter = require("./routes/YoutubeApi");
+var youtubeAPIRouter = require("./routes/youtubeApi");
 
 var app = express();
 app.use(express.static(path.join(__dirname, '/../frontend/build')));
