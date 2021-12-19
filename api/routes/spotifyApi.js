@@ -7,12 +7,10 @@ router.post("/", async function (req, res, next) {
 
 
     const url = req.body.url;
-
     const fileName = await getFileName(url)
     const file = await download(url);
-    var fileContents = Buffer.from(file, "base64");
-
-    var readStream = new stream.PassThrough();
+    const fileContents = Buffer.from(file, "base64");
+    const readStream = new stream.PassThrough();
     readStream.end(fileContents);
 
     res.set('Content-disposition', 'attachment; filename=' + fileName);

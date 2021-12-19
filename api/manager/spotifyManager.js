@@ -14,8 +14,6 @@ const spotify = new Spotify(credentials);
  * @return {Promise<*|string>}
  */
 const download = async function (link) {
-
-    // todo manage playlists actually only one track worked
     const type = await getType(link)
     const downloadMethod = 'download' + type[0].toUpperCase() + type.slice(1);
 
@@ -24,12 +22,9 @@ const download = async function (link) {
 }
 
 const getFileName = async function (link) {
-
     const type = await getType(link)
     const getDataMethod = 'get' + type[0].toUpperCase() + type.slice(1);
-
     const data = await spotify[getDataMethod](link);
-
 
     return `${data.name}.mp3`;
 

@@ -3799,6 +3799,11 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
+youtube-dl-wrap@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/youtube-dl-wrap/-/youtube-dl-wrap-2.1.1.tgz#49004bbc4059504baf335f37a526870455e6b974"
+  integrity sha512-j3B/p+g+HOutvFsvcmzhtAL3Zg1/UXAzQQSv6bc/0xhIvZNyLgjhfm8v9mARAueO1v2HTnGfzafiddvEZ5L3NA==
+
 yt-search@^2.7.5, yt-search@^2.8.0:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/yt-search/-/yt-search-2.10.2.tgz#57790043b958d3f9e357607b3f3c252ba2314b59"
