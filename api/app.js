@@ -10,19 +10,19 @@ var youtubeAPIRouter = require("./routes/youtubeApi");
 var app = express();
 app.use(express.static(path.join(__dirname, '/../frontend/build')));
 
-//
-// const cors = require("cors");
-// const corsOptions = {
-//     origin: '*',
-//     credentials: true,
-//     optionSuccessStatus: 200,
-//     exposedHeaders: ['Content-Disposition']
-// }
+
+const cors = require("cors");
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+    optionSuccessStatus: 200,
+    exposedHeaders: ['Content-Disposition']
+}
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 
 app.use("/api/download-spotify", spotifyAPIRouter);
