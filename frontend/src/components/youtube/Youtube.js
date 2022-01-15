@@ -46,8 +46,9 @@ function Youtube() {
 
         setIsLoading(true);
 
-        axios.post('http://localhost:5000/api/download-youtube', {
+        axios.post('http://localhost:5000/api/download-youtube/', {
             url: url,
+            withCredentials: true
         }, {
             responseType: 'blob',
         }).then( async function (response) {
@@ -59,7 +60,7 @@ function Youtube() {
         })
             .catch(function (error) {
                 setIsLoading(false);
-                console.log(error); // todo manage error
+                console.log(error);
             });
     };
 

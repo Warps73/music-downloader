@@ -46,8 +46,9 @@ function Spotify() {
 
         setIsLoading(true);
 
-        axios.post('http://localhost:5000/api/download-spotify', {
+        axios.post('http://localhost:5000/api/download-spotify/', {
             url: url,
+            withCredentials: true
         }, {
             responseType: 'blob',
         }).then( async function (response) {

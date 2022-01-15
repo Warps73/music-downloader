@@ -24,7 +24,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
-
 app.use("/api/download-spotify", spotifyAPIRouter);
 app.use("/api/download-youtube", youtubeAPIRouter);
 
