@@ -46,7 +46,7 @@ function Youtube() {
 
         setIsLoading(true);
 
-        axios.post('http://localhost:5000/api/download-youtube/', {
+        axios.post('https://localhost:5000/api/download-youtube/', {
             url: url,
             withCredentials: true
         }, {
