@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '/../frontend/build')));
 
 const cors = require("cors");
 const corsOptions = {
-    origin: '*',
+    origin: 'http://localhost:5000',
     credentials: true,
     optionSuccessStatus: 200,
     exposedHeaders: ['Content-Disposition']
