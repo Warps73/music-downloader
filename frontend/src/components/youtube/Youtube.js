@@ -46,14 +46,13 @@ function Youtube() {
 
         setIsLoading(true);
 
-        axios.post('http://localhost:5000/api/download-youtube/', {
+        axios.post('https://127.0.0.1:8000/api/youtube', {
             url: url,
-            withCredentials: true
         }, {
             responseType: 'blob',
         }).then( async function (response) {
-            const filename = response.headers['content-disposition'].split('=')[1]
-            fileDownload(response.data, filename)
+            const filename = response.headers['content-disposition'].split('=')[1];
+            fileDownload(response.data, filename);
             setIsLoading(false);
             setUrl('');
 
