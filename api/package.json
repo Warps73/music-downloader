@@ -20,6 +20,7 @@
     "morgan": "~1.9.1",
     "spotify-dl": "^1.0.5",
     "spotifydl-core": "^0.2.0",
+    "youtube-dl-exec": "^3.0.10",
     "youtube-dl-wrap": "^2.1.1"
   },
   "proxy": "http://localhost:5000",
