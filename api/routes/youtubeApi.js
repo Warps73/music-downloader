@@ -4,39 +4,42 @@ const youtubedl = require('youtube-dl-exec');
 const fileSystem = require("fs");
 const path = require("path");
 const os = require('os');
+const {getOptions, getBestFormat} = require("../util/youtubeOptions");
 router.post("/", async function (req, res, next) {
     try {
         const url = req.body.url;
-        console.log('start dl infos')
+        const withVideo = req.body.withVideo
 
-        // Première étape : obtenir les infos
         const infos = await youtubedl(url, {
             dumpSingleJson: true,
             noCheckCertificates: true,
             noWarnings: true,
             preferFreeFormats: true,
-            addHeader: ['referer:youtube.com', 'user-agent:googlebot']
-        });
-        console.log('end dl infos')
-
-        const fileName = `${infos.title}.mp3`;
-        const filePath = path.join(os.tmpdir(), fileName);
-        console.log('start dl')
-        // Deuxième étape : télécharger l'audio
-        await youtubedl(url, {
-            extractAudio: true,
-            audioFormat: 'mp3',
-            noCheckCertificates: true,
             noPlaylist: true,
-            output: filePath, // Chemin complet du fichier
             addHeader: ['referer:youtube.com', 'user-agent:googlebot']
         });
-        console.log('end dl')
+
+        const format = withVideo ? getBestFormat(infos.formats) : 'mp3'
+        const ext = `.${format}`
+        const fileName = infos.title + ext;
+        const filePath = path.join(os.tmpdir(), fileName);
+        const options = getOptions(withVideo, filePath, format)
+
+        await youtubedl(url, options);
 
         res.header('Access-Control-Expose-Headers', 'Content-Disposition');
         res.header('Content-disposition', 'attachment; filename=' + fileName);
-        res.header('Content-Type', 'audio/mpeg');
         fileSystem.createReadStream(filePath).pipe(res);
+
+        res.on('close', () => {
+            fileSystem.unlink(filePath, (err) => {
+                if (err) {
+                    console.error('Erreur lors de la suppression du fichier:', err);
+                } else {
+                    console.log('Fichier supprimé avec succès');
+                }
+            });
+        });
 
     } catch (error) {
         console.error('Erreur:', error);

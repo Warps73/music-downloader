@@ -29,9 +29,14 @@ const InputContainer = styled.div`
 function Youtube() {
     const [url, setUrl] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [withVideo, setWithVideo] = useState(false)
 
     const handleChange = function (e) {
         setUrl(e.target.value)
+    }
+
+    const handleCheckbox = function (){
+        setWithVideo(!withVideo)
     }
 
     const handleClick = function () {
@@ -48,6 +53,7 @@ function Youtube() {
 
         axios.post('http://localhost:5000/api/download-youtube/', {
             url: url,
+            withVideo: withVideo,
             withCredentials: true
         }, {
             responseType: 'blob',
@@ -72,6 +78,15 @@ function Youtube() {
                     <SearchInput placeholder="Youtube url" value={url} onChange={handleChange}/>
                     <YoutubeButton onClick={handleClick}>Download</YoutubeButton>
                 </InputContainer>
+                <div>
+                    <label>
+                        <input
+                            checked={withVideo}
+                            onChange={handleCheckbox}
+                            type="checkbox"/>
+                        Flux vidéo
+                    </label>
+                </div>
                 {isLoading ? <Loader/> : <></>}
             </SearchContainer>
         </Container>
