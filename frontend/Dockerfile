@@ -2,9 +2,14 @@
 FROM node:22.4.1-alpine AS build
 
 WORKDIR /app
+COPY package*.json ./
+COPY yarn.lock ./
+
 COPY . ./
+
 RUN yarn install
 RUN yarn run build
+
 
 # Étape 2 : Servir l'application React
 FROM nginx:alpine

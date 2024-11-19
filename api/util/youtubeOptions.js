@@ -1,14 +1,14 @@
+const path = require("path");
+
 const videoOptions = {
-    noCheckCertificates: true,
     noPlaylist: true,
-    addHeader: ['referer:youtube.com', 'user-agent:googlebot']
+    cookies: path.resolve(__dirname,'../resource/cookies.txt')
 }
 
 const audioOptions = {
     extractAudio: true,
-    noCheckCertificates: true,
+    cookies: path.resolve(__dirname,'../resource/cookies.txt'),
     noPlaylist: true,
-    addHeader: ['referer:youtube.com', 'user-agent:googlebot']
 }
 
 const getOptions = function (video, output, format) {

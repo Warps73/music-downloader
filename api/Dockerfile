@@ -16,6 +16,8 @@ RUN yarn install
 
 COPY --chown=node:node . .
 
+RUN chmod +x /home/node/app/exec/yt-dlp
+
 EXPOSE 5000
 
 CMD [ "node", "./bin/www" ]

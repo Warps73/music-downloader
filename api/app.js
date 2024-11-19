@@ -12,17 +12,30 @@ app.use(express.static(path.join(__dirname, '/../frontend/build')));
 
 
 const cors = require("cors");
-const corsOptions = {
-    origin: '*',
-    credentials: true,
-    optionSuccessStatus: 200,
-    exposedHeaders: ['Content-Disposition']
-}
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        error: 'Une erreur est survenue',
+        message: err.message
+    });
+});
+
 
 app.use("/api/download-spotify", spotifyAPIRouter);
 app.use("/api/download-youtube", youtubeAPIRouter);
@@ -31,7 +44,8 @@ app.use("/api/download-youtube", youtubeAPIRouter);
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../frontend/build/index.html'));
+    res.status(404)
+    res.send('Not found')
 });
 
 module.exports = app;
