@@ -1,48 +1,43 @@
 var express = require("express");
 var router = express.Router();
+const youtubedl = require('youtube-dl-exec');
 const fileSystem = require("fs");
 const path = require("path");
-const ytDlpPath = path.resolve(__dirname, '../exec/yt-dlp');
-const { create: createYoutubeDl } = require('youtube-dl-exec')
-const youtubedl = createYoutubeDl(ytDlpPath)
 const os = require('os');
-const {getOptions, getBestFormat} = require("../util/youtubeOptions");
 router.post("/", async function (req, res, next) {
     try {
         const url = req.body.url;
-        const withVideo = req.body.withVideo
+        console.log('start dl infos')
 
+        // Première étape : obtenir les infos
         const infos = await youtubedl(url, {
             dumpSingleJson: true,
+            noCheckCertificates: true,
+            noWarnings: true,
             preferFreeFormats: true,
-            noPlaylist: true,
-            cookies: path.resolve(__dirname,'../resource/cookies.txt')
+            addHeader: ['referer:youtube.com', 'user-agent:googlebot']
         });
+        console.log('end dl infos')
 
-        const format = withVideo ? getBestFormat(infos.formats) : 'mp3'
-        const ext = `.${format}`
-        const fileName = infos.title + ext;
-        const tmpDir = os.tmpdir();
-        console.log('Temp directory:', tmpDir);
+        let fileName = `${infos.title}.mp3`;
         const filePath = path.join(os.tmpdir(), fileName);
-
-        const options = getOptions(withVideo, filePath, format)
-
-        await youtubedl(url, options);
-
+        console.log('start dl')
+        // Deuxième étape : télécharger l'audio
+        await youtubedl(url, {
+            extractAudio: true,
+            audioFormat: 'mp3',
+            noCheckCertificates: true,
+            noPlaylist: true,
+            output: filePath, // Chemin complet du fichier
+            addHeader: ['referer:youtube.com', 'user-agent:googlebot']
+        });
+        console.log('end dl')
+        console.log(fileName)
+        fileName = encodeURIComponent(fileName);
         res.header('Access-Control-Expose-Headers', 'Content-Disposition');
         res.header('Content-disposition', 'attachment; filename=' + fileName);
+        res.header('Content-Type', 'audio/mpeg');
         fileSystem.createReadStream(filePath).pipe(res);
-
-        // res.on('close', () => {
-        //     fileSystem.unlink(filePath, (err) => {
-        //         if (err) {
-        //             console.error('Erreur lors de la suppression du fichier:', err);
-        //         } else {
-        //             console.log('Fichier supprimé avec succès');
-        //         }
-        //     });
-        // });
 
     } catch (error) {
         console.error('Erreur:', error);
